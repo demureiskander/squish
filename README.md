@@ -30,7 +30,7 @@ No subscriptions, no limits, no ads.
 - **Multi-select** — click, ⌘-click, ⇧-range, marquee; drag results out to Finder
 - **Native macOS** — dark mode, menu bar icon, notifications, English & Русский
 
-## Install
+## Install 📥
 
 ### Homebrew (recommended)
 
