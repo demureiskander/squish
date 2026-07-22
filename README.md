@@ -61,7 +61,7 @@ Dependencies (resolved automatically via Swift Package Manager):
 
 Swift 6 · SwiftUI · Core Image · ImageIO · vImage. MVVM architecture, zero heavyweight dependencies.
 
-## Support
+## Support ☕
 
 If Squish is useful to you, you can [support development ❤️](https://web.tribute.tg/d/GLT).
 
