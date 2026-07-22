@@ -1,0 +1,50 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: macos-14
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode
+        run: sudo xcode-select -s /Applications/Xcode_16.app || sudo xcode-select -s /Applications/Xcode.app
+
+      - name: Show versions
+        run: |
+          xcodebuild -version
+          swift --version
+
+      - name: Build DMG
+        run: ./scripts/build-dmg.sh
+
+      - name: Compute checksum
+        id: sha
+        run: echo "sha256=$(shasum -a 256 dist/Squish.dmg | awk '{print $1}')" >> "$GITHUB_OUTPUT"
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          files: dist/Squish.dmg
+          generate_release_notes: true
+          body: |
+            ### Squish ${{ github.ref_name }}
+
+            **Install via Homebrew:**
+            ```
+            brew install --cask demureiskander/tap/squish
+            ```
+
+            Or download `Squish.dmg` below.
+
+            > ⚠️ The app is not notarized yet. On first launch: right-click → **Open**.
+
+            DMG SHA-256: `${{ steps.sha.outputs.sha256 }}`
