@@ -23,6 +23,9 @@ jobs:
           xcodebuild -version
           swift --version
 
+      - name: Install create-dmg
+        run: brew install create-dmg
+
       - name: Build DMG
         run: ./scripts/build-dmg.sh
 
