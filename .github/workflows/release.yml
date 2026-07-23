@@ -10,18 +10,22 @@ permissions:
 
 jobs:
   build:
-    runs-on: macos-14
+    runs-on: macos-15
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Select Xcode
-        run: sudo xcode-select -s /Applications/Xcode_16.app || sudo xcode-select -s /Applications/Xcode.app
+      - name: Select newest Xcode (needs Swift 6)
+        run: |
+          XC=$(ls -d /Applications/Xcode_16*.app /Applications/Xcode_26*.app 2>/dev/null | sort -V | tail -1)
+          if [ -z "$XC" ]; then XC=/Applications/Xcode.app; fi
+          echo "Using $XC"
+          sudo xcode-select -s "$XC"
 
       - name: Show versions
         run: |
           xcodebuild -version
-          swift --version
+          swiftc --version
 
       - name: Install create-dmg
         run: brew install create-dmg
